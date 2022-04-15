@@ -1,11 +1,13 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 
 import { EntriesProvider } from '../context/entries';
 import { UIProvider } from '../context/ui';
 
 import { lightTheme, darkTheme } from '../themes'
+
 
 const basicTheme = createTheme({
   palette: {
@@ -15,14 +17,16 @@ const basicTheme = createTheme({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <EntriesProvider>
-      <UIProvider>
-        <ThemeProvider theme={ darkTheme }>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </UIProvider>
-    </EntriesProvider>
+    <SnackbarProvider maxSnack={ 3 }>
+      <EntriesProvider>
+        <UIProvider>
+          <ThemeProvider theme={ darkTheme }>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </UIProvider>
+      </EntriesProvider>
+    </SnackbarProvider>
 
   )
 }
